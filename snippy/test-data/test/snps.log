@@ -1,0 +1,66 @@
+
+### samtools faidx reference/ref.fa
+
+
+### bwa index reference/ref.fa
+
+[bwa_index] Pack FASTA... 0.04 sec
+[bwa_index] Construct BWT for the packed sequence...
+[bwa_index] 2.34 seconds elapse.
+[bwa_index] Update BWT... 0.04 sec
+[bwa_index] Pack forward-only FASTA... 0.03 sec
+[bwa_index] Construct SA from BWT and Occ... 0.61 sec
+[main] Version: 0.7.12-r1039
+[main] CMD: bwa index reference/ref.fa
+[main] Real time: 3.079 sec; CPU: 3.060 sec
+
+### (bwa mem  -v 2 -M -R '@RG	ID:snps	SM:snps' -t 1 reference/ref.fa /Users/Simon/code/galaxy-wrappers/snippy/test-data/reads_1.fq /Users/Simon/code/galaxy-wrappers/snippy/test-data/reads_2.fq | samtools view -@ 1 -q 60 -F 3844 -S -b -u -T ref.fa - | samtools sort -@ 1 - snps)
+
+[samfaipath] fail to read file ref.fa.
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (429, 488, 536)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (215, 750)
+[M::mem_pestat] mean and std.dev: (479.53, 81.93)
+[M::mem_pestat] low and high boundaries for proper pairs: (108, 857)
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[main] Version: 0.7.12-r1039
+[main] CMD: bwa mem -v 2 -M -R @RG	ID:snps	SM:snps -t 1 reference/ref.fa /Users/Simon/code/galaxy-wrappers/snippy/test-data/reads_1.fq /Users/Simon/code/galaxy-wrappers/snippy/test-data/reads_2.fq
+[main] Real time: 0.268 sec; CPU: 0.262 sec
+
+### samtools index snps.bam
+
+
+### samtools depth -q 20 snps.bam | bgzip > snps.depth.gz
+
+
+### tabix -s 1 -b 2 -e 2 snps.depth.gz
+
+
+### fasta_generate_regions.py reference/ref.fa.fai 1397543 > reference/ref.txt
+
+
+### freebayes-parallel reference/ref.txt 1 -p 1 -q 20 -m 60 -F 0.9 -C 10 -V -f reference/ref.fa snps.bam > snps.raw.vcf
+
+WARNING(freebayes): Could not find any mapped reads in target region gi|15829254|ref|NC_002695.1|:1397543..2795086
+
+### vcffilter -f 'DP > 9' -f 'QUAL > 10' snps.raw.vcf > snps.vcf
+
+
+### bgzip -c snps.vcf > snps.vcf.gz
+
+
+### tabix -p vcf snps.vcf.gz
+
+
+### /usr/local/Cellar/snippy/2.6/bin/snippy-vcf_to_tab --gff reference/ref.gff --ref reference/ref.fa --vcf snps.vcf > snps.tab
+
+Loading reference: reference/ref.fa
+Loaded 1 sequences.
+Loading features: reference/ref.gff
+Parsing variants: snps.vcf
+Converted 0 SNPs to TAB format.
+
+### vcf-consensus snps.vcf.gz < reference/ref.fa > snps.consensus.fa
+

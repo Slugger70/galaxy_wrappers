@@ -1,0 +1,9 @@
+categories:
+- Sequence Analysis
+description: Contains the barrnap tool wrapper and dependency definition for version 0.7 of barrnap.
+long_description: |
+  Barrnap predicts the location of ribosomal RNA genes in genome sequences It takes FASTA DNA sequence as input, and write GFF3 as output.
+  https://github.com/tseemann/barrnap
+name: barrnap
+owner: simon-gladman
+type: unrestricted
