@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <tool_dependency>
-    <package name="package_snippy_2_6" version="2.6">
+    <package name="snippy" version="2.6">
         <install version="1.0">
             <actions>
                 <action type="download_by_url">https://github.com/tseemann/snippy/archive/v2.6.tar.gz</action>
