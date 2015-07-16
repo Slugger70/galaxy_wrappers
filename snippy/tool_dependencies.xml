@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <tool_dependency>
     <package name="snippy" version="2.6">
-        <repository name="package_snippy_2_6" owner="simon-gladman" changeset_revision="7ae49fe1c5ef" toolshed="https://testtoolshed.g2.bx.psu.edu"/>
+        <repository name="package_snippy_2_6" owner="simon-gladman" />
     </package>
 </tool_dependency>
