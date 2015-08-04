@@ -12,28 +12,35 @@
         -s $start_kmer
         -e $end_kmer
         -d out
-        -f \"
-        #for i in $files
+        -f "
+        #for $i in $files:
           -${i.filetype}
-          #if str($i.paired_type.paired_type_selector) == "paired"
-            #if $i.__index__ > 1
-              -shortPaired${i.__index__}
+
+          #if str($i.paired_type.paired_type_selector) == "paired":
+
+            #if $i.__index__ > 1:
+              -shortPaired$i.__index__
             #else
             -shortPaired
             #end if
+
             -separate $i.paired_type.input1 $i.paired_type.input2
           #end if
+
           #if str($i.paired_type.paired_type_selector) == "single"
-            #if $i.__index > 1
-              -short${i.__index__}
+
+            #if $i.__index__ > 1
+              -short$i.__index__
             #else
               -short
-            #endif
+            #end if
+
             $i.paired_type.input1
           #end if
+
           #if str($i.paired_type.paired_type_selector) == "paired_collection"
             #if $i.__index__ > 1
-              -shortPaired${i.__index__}
+              -shortPaired$i.__index__
             #else
               -shortPaired
             #end if
@@ -41,7 +48,7 @@
           #end if
           #if str($i.paired_type.paired_type_selector) == "paired_iv"
             #if $i.__index__ > 1
-              -shortPaired${i.__index__}
+              -shortPaired$i.__index__
             #else
               -shortPaired
             #end if
@@ -49,17 +56,26 @@
           #end if
         #end for
         "
-        #if str(advanced.advanced_select) == "advanced"
+
+        #if str($advanced.advanced_select) == "advanced"
           $advanced.verbose
           -k $advanced.optFuncKmer
           -c $advanced.optFuncCov
+          #if str($advanced.velvetg_opts) != ""
+            -o "$advanced.velvetg_opts"
+          #end if
+          -m $advanced.minCutOff
+          -z $advanced.maxCutOff
+        #end if
+          &> $stderr
+
     ]]></command>
     <inputs>
       <param name="start_kmer" type="integer" value="31" label="Start k-mer size" help="Odd integer, Lower limit of k-mer size range to search for optimum value" />
       <param name="end_kmer" type="integer" value="191" label="End k-mer size" help="Odd integer, Upper limit of k-mer size range to search for optimum value" />
       <param name="kmer_step" type="integer" value="2" label="K-mer search step size" help="Even integer, the k-mer value step size when searching the range" />
 
-      <repeat name="files" title="Input files">
+      <repeat name="files" title="Input files" min="1">
         <param name="filetype" label="Input file type" type="select" help="Input file type">
           <option value="fastq">Fastq</option>
           <option value="fasta">Fasta</option>
@@ -106,11 +122,22 @@
     </inputs>
 
     <outputs>
-      <data type="fasta" name="contigs" label="${tool.name} on ${on_string}: Contigs" />
-      <data type="tabular" name="stats" label="${tool.name} on ${on_string}: Contig Stats" />
-      <data type="tabular" name="logfile" label="${tool.name} on ${on_string}: Log file" hidden="True"/>
-      <data type="tabular" name="stderr" label="${tool.name} on ${on_string}: STDERR" hidden="True"/>
+      <data format="fasta" name="contigs" label="${tool.name} on ${on_string}: Contigs" from_work_dir="out/contigs.fa"/>
+      <data format="tabular" name="stats" label="${tool.name} on ${on_string}: Contig Stats" from_work_dir="out/stats.txt"/>
+      <data format="tabular" name="logfile" label="${tool.name} on ${on_string}: Log file" hidden="True" from_work_dir="*_Logfile.txt"/>
+      <data format="tabular" name="stderr" label="${tool.name} on ${on_string}: STDERR" hidden="True" />
     </outputs>
+
+    <tests>
+      <test>
+        <param name="start_kmer" value="21" />
+        <param name="end_kmer" value="31" />
+        <param name="files_0|filetype" value="fasta" />
+        <param name="files_0|paired_type|paired_type_selector" value="single" />
+        <param name="files_0|paired_type|input1" value="test_reads.fa" ftype="fasta" />
+        <output name="contigs" ftype="fasta" file="test-contigs.fa" />
+      </test>
+    </tests>
 
     <help><![CDATA[
       **Velvet Optimiser Overview**
@@ -125,8 +152,6 @@
 
       .. __: http://www.ebi.ac.uk/~zerbino/velvet/Manual.pdf
 
-      ------
-
       **VelvetOptimiser**
 
       VelvetOptimiser_ was written by Simon Gladman of CSIRO/Melbourne University.
@@ -135,15 +160,11 @@
 
       .. _VelvetOptimiser: http://bioinformatics.net.au/software.shtml
 
-      ------
-
       **Velvet Optimiser**
 
       Galaxy tool wrapper for newer versions (2.5.5) of Velvet Optimiser. Written by Simon Gladman of VBC/VLSCI.
 
       Written for use on the Genomics Virtual Laboratory.
-
-      ------
 
       **Outputs**
 
@@ -274,7 +295,7 @@
 
     ]]></help>
     <citations>
-        <citation type=type="bibtex">@UNPUBLISHED{GLADMAN2012,
+        <citation type="bibtex">@UNPUBLISHED{GLADMAN2012,
           author = "Gladman Simon",
           title = "VelvetOptimiser",
           year = "2012",
