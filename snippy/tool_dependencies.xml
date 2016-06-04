@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <tool_dependency>
-    <package name="snippy" version="2.6">
-        <repository name="package_snippy_2_6" owner="simon-gladman" />
+    <package name="snippy" version="3.0">
+        <repository name="package_snippy_3_0" owner="simon-gladman" />
     </package>
 </tool_dependency>
