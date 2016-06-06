@@ -2,7 +2,11 @@
     <requirements>
       <requirement type="package" version="3.0">snippy</requirement>
       <requirement type="package" version="1.2">samtools</requirement>
-      <requirement type="package" version="0.9.20">freebayes</requirement>
+      <requirement type="package" version="0_9_20_b040236">freebayes</requirement>
+      <requirement type="package" version="0.7.12">bwa</requirement>
+      <requirement type="package" version="0.1.11">vcftools</requirement>
+      <requirement type="package" version="4.0">snpeff</requirement>
+      <requirement type="package" version="8a5602bf07">vcflib</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:" />
