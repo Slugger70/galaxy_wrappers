@@ -53,6 +53,10 @@
 
       gunzip out/snps.depth.gz
 
+      &&
+
+      bgzip -c out > out.bgz
+
 
     ]]></command>
     <inputs>
@@ -119,6 +123,7 @@
       <data format="bam" name="snpsbam" label="${tool.name} on ${on_string} mapped reads (bam)" from_work_dir="out/snps.bam">
         <filter>cleanup is False</filter>
       </data>
+      <data format="bgzip" name="outdir" label="${tool.name} on ${on_string} out dir" from_work_dir="out.bgz" />
     </outputs>
 
     <tests>
