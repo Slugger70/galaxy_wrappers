@@ -1,10 +1,10 @@
 <tool id="snippy" name="snippy" version="0.2.0">
-    <requirements>
+  <requirements>
       <requirement type="package" version="3.0">snippy</requirement>
-    </requirements>
-    <stdio>
-        <exit_code range="1:" />
-    </stdio>
+  </requirements>
+  <stdio>
+      <exit_code range="1:" />
+  </stdio>
 
     <command><![CDATA[
       #if str( $reftype.ref_type_selector ) == "fasta"
@@ -55,7 +55,7 @@
 
       &&
 
-      bgzip -c out > out.bgz
+      tar -czf out.tgz out
 
 
     ]]></command>
@@ -123,7 +123,7 @@
       <data format="bam" name="snpsbam" label="${tool.name} on ${on_string} mapped reads (bam)" from_work_dir="out/snps.bam">
         <filter>cleanup is False</filter>
       </data>
-      <data format="bgzip" name="outdir" label="${tool.name} on ${on_string} out dir" from_work_dir="out.bgz" />
+      <data format="zip" name="outdir" label="${tool.name} on ${on_string} out dir" from_work_dir="out.tgz" />
     </outputs>
 
     <tests>
@@ -194,14 +194,13 @@ Options:
   --bwaopt [X]      Extra BWA MEM options, eg. -x pacbio (default '')
 
     ]]></help>
+  <citations>
+    <citation type="bibtex">@UNPUBLISHED{Seemann2013,
+      author = "Seemann T",
+      title = "snippy: fast bacterial variant calling from NGS reads",
+      year = "2015",
+      note = "https://github.com/tseemann/snippy"}</citation>
+  </citations>
 
-    <citations>
-      <citation type="bibtex">@UNPUBLISHED{Seemann2013,
-        author = "Seemann T",
-        title = "snippy: fast bacterial variant calling from NGS reads",
-        year = "2015",
-        note = "https://github.com/tseemann/snippy"}
-      </citation>
-    </citations>
 
 </tool>
