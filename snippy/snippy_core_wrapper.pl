@@ -55,7 +55,7 @@ sub setOptions {
 
   @Options = (
     {OPT=>"help",    VAR=>\&usage,             DESC=>"This help"},
-    {OPT=>"mincov=f",  VAR=>\$mincov, DEFAULT=>'10.0', DESC=>"The minimum coverage to consider."},
+    {OPT=>"mincov=i",  VAR=>\$mincov, DEFAULT=>'10.0', DESC=>"The minimum coverage to consider."},
     {OPT=>"noref!", VAR=>\$noref, DEFAULT=>0, DESC=>"Don't include the reference in the alignment."},
     {OPT=>"indirs=s", VAR=>\$indirs, DEFAULT=>"", DESC=>"A whitespace delimited list of the snippy output zipped dirs."},
   );

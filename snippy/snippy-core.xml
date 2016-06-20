@@ -1,4 +1,4 @@
-<tool id="snippy-core" name="snippy-core" version="0.1.0">
+<tool id="snippy-core" name="snippy-core" version="0.2.0">
 
   <requirements>
       <requirement type="package" version="3.0">snippy</requirement>
@@ -7,7 +7,8 @@
       <exit_code range="1:" />
   </stdio>
 
-    <command interpreter=perl><![CDATA[
+    <command interpreter="perl">
+      <![CDATA[
 
         snippy_core_wrapper.pl
         $is_reference
@@ -17,9 +18,9 @@
     ]]></command>
 
     <inputs>
-      <param name="indirs" type="data" multiple="true" format="bgzip" label="Snippy input zipped dirs" help="Select all the snippy inputs for alignment" />
+      <param name="indirs" type="data" multiple="true" format="zip" label="Snippy input zipped dirs" help="Select all the snippy inputs for alignment" />
       <param name="is_reference" type="boolean" checked="true" truevalue="--noref" falsevalue="" label="Exclude reference" help="Don't include the reference file in the alignment." />
-      <param name="mincov" type="float" value="10.0" min="1" label="Minimum coverage" help="Minimum depth of coverage to consider core (default '10')" />
+      <param name="mincov" type="integer" value="10" min="1" label="Minimum coverage" help="Minimum depth of coverage to consider core (default '10')" />
     </inputs>
 
     <outputs>
