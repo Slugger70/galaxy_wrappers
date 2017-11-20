@@ -115,8 +115,8 @@
           <param name="optFuncKmer" type="text" value="n50" label="K-mer optimisation function" help="See help below for possibilities!"/>
           <param name="optFuncCov" type="text" value="Lbp" label="Coverage cutoff optimisation function" help="See help below for possibilities!"/>
           <param name="velvetg_opts" type="text" value="" label="Other velvetg options" help="Add any other required velvetg options from the advanced set"/>
-          <param name="minCovCutoff" type="integer" value="0" label="Minimum coverage cutoff" help="The minimum coverage cutoff to consider in the optimisation"/>
-          <param name="maxCovCutoff" type="float" value="0.8" label="Maximum coverage cutoff" help="The maximum coverage cutoff to consider expressed as a fraction of the calculated expected coverage."/>
+          <param name="minCutoff" type="integer" value="0" label="Minimum coverage cutoff" help="The minimum coverage cutoff to consider in the optimisation"/>
+          <param name="maxCutoff" type="float" value="0.8" label="Maximum coverage cutoff" help="The maximum coverage cutoff to consider expressed as a fraction of the calculated expected coverage."/>
         </when>
       </conditional>
     </inputs>
