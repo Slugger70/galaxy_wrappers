@@ -1,14 +1,17 @@
 <tool id="velvetoptimiser" name="VelvetOptimiser" version="1.1.0">
     <requirements>
       <requirement type="package" version="1.2.10">velvet</requirement>
-      <requirement type="package" version="2.2.5">velvetoptimiser</requirement>
+      <requirement type="package" version="2.2.5">perl-velvetoptimiser</requirement>
     </requirements>
     <stdio>
         <exit_code range="1:" />
     </stdio>
 
     <command><![CDATA[
+      export OMP_NUM_THREADS=2 &&
+      export OMP_THREAD_LIMIT=2 &&
       VelvetOptimiser.pl
+        -t "\${GALAXY_SLOTS:-1}"
         -s $start_kmer
         -e $end_kmer
         -d out
@@ -44,7 +47,7 @@
             #else
               -shortPaired
             #end if
-            -separate $i.paired_type.input1.forward $i.paired_type.input2.reverse
+            -separate $i.paired_type.input1.forward $i.paired_type.input1.reverse
           #end if
           #if str($i.paired_type.paired_type_selector) == "paired_iv"
             #if $i.__index__ > 1
@@ -115,8 +118,8 @@
           <param name="optFuncKmer" type="text" value="n50" label="K-mer optimisation function" help="See help below for possibilities!"/>
           <param name="optFuncCov" type="text" value="Lbp" label="Coverage cutoff optimisation function" help="See help below for possibilities!"/>
           <param name="velvetg_opts" type="text" value="" label="Other velvetg options" help="Add any other required velvetg options from the advanced set"/>
-          <param name="minCovCutoff" type="integer" value="0" label="Minimum coverage cutoff" help="The minimum coverage cutoff to consider in the optimisation"/>
-          <param name="maxCovCutoff" type="float" value="0.8" label="Maximum coverage cutoff" help="The maximum coverage cutoff to consider expressed as a fraction of the calculated expected coverage."/>
+          <param name="minCutoff" type="integer" value="0" label="Minimum coverage cutoff" help="The minimum coverage cutoff to consider in the optimisation"/>
+          <param name="maxCutoff" type="float" value="0.8" label="Maximum coverage cutoff" help="The maximum coverage cutoff to consider expressed as a fraction of the calculated expected coverage."/>
         </when>
       </conditional>
     </inputs>
@@ -125,7 +128,7 @@
       <data format="fasta" name="contigs" label="${tool.name} on ${on_string}: Contigs" from_work_dir="out/contigs.fa"/>
       <data format="tabular" name="stats" label="${tool.name} on ${on_string}: Contig Stats" from_work_dir="out/stats.txt"/>
       <data format="tabular" name="logfile" label="${tool.name} on ${on_string}: Log file" hidden="True" from_work_dir="*_Logfile.txt"/>
-      <data format="tabular" name="stderr" label="${tool.name} on ${on_string}: STDERR" hidden="True" />
+      <!-- <data format="tabular" name="stderr" label="${tool.name} on ${on_string}: STDERR" hidden="True" /> -->
     </outputs>
 
     <tests>

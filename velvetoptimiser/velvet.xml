@@ -101,7 +101,7 @@
         <param name="files_0|filetype" value="fasta" />
         <param name="files_0|paired_type|paired_type_selector" value="single" />
         <param name="files_0|paired_type|input1" value="test_reads.fa" ftype="fasta" />
-        <output name="contigs" ftype="fasta" file="contigs.fa" />
+        <output name="contigs" ftype="fasta" file="contigs.fa" compare="sim_size"/>
       </test>
     </tests>
     <help><![CDATA[
